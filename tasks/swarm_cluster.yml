@@ -90,7 +90,7 @@
 
 - name: Get list of labels
   command: >-
-         docker inspect
+         docker node inspect
          --format {% raw %}'{{range $key, $value := .Spec.Labels}}{{printf "%s\n" $key}}{{end}}'{% endraw %}
          {{ ansible_hostname }}
   register: docker_swarm_labels

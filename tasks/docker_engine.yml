@@ -45,9 +45,22 @@
   package:
     name: docker-engine
     state: present
+  notify: restart docker
 
-- name: Enable the Docker daemon as a service and start it.
-  service:
-    name: docker
-    state: started
-    enabled: yes
+- name: Create directory for docker systemd override
+  file: path=/etc/systemd/system/docker.service.d state=directory
+
+- name: configure systemd to allow overriding socket in docker daemon config (https://github.com/moby/moby/issues/25471)
+  copy: 
+    src: simple_dockerd.conf
+    dest: /etc/systemd/system/docker.service.d/simple_dockerd.conf
+  notify: restart docker
+
+- name: configure docker daemon.json
+  template:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 0400
+    owner: root
+    group: root
+  notify: restart docker
