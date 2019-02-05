@@ -49,7 +49,7 @@
 
 - name: Install the Docker Engine.
   package:
-    name: docker-engine
+    name: "{{ docker_engine_apt_package }}"
     state: present
   notify: restart docker
 
