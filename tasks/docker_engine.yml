@@ -1,11 +1,19 @@
 ---
 
-- name: Import Docker APT public key.
+- name: Import Docker APT public key from key server.
   apt_key:
-    keyserver: "{{ docker_pubkey_server }}"
+    server: "{{ docker_pubkey_server }}"
     id: "{{ docker_pubkey_id }}"
     state: present
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and docker_pubkey_server is defined and docker_pubkey_server != ''
+
+- name: Import Docker APT public key from file.
+  apt_key:
+    file: "{{ docker_pubkey_file }}"
+    state: present
+  when: ansible_os_family == 'Debian' and docker_pubkey_file is defined and docker_pubkey_file != ''
+
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 - name: Install yum-utils if necessary.
   yum:
