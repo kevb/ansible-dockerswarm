@@ -9,9 +9,9 @@
 
 - name: Import Docker APT public key from file.
   apt_key:
-    file: "{{ docker_pubkey_file }}"
+    url: "{{ docker_pubkey_url }}"
     state: present
-  when: ansible_os_family == 'Debian' and docker_pubkey_file is defined and docker_pubkey_file != ''
+  when: ansible_os_family == 'Debian' and docker_pubkey_url is defined and docker_pubkey_url != ''
 
 - name: Install yum-utils if necessary.
   yum:
