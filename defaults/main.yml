@@ -8,6 +8,11 @@ docker_repo: main
 # Extra packages that have to be installed together with Docker
 docker_dependencies: "{{ default_docker_dependencies }}"
 
+docker_pubkey_id: "58118E89F3A912897C070ADBF76221572C52609D"
+docker_pubkey_server: "hkp://ha.pool.sks-keyservers.net:80"
+
+docker_apt_repo: "deb https://apt.dockerproject.org/repo {{ ansible_distribution | lower }}-{{ ansible_distribution_release }} {{ docker_repo }}"
+
 # Docker swarm network can be define in order to be sure that
 # swarm cluster doesn't overlap with you infrastructure
 # docker_swarm_network: 10.10.8.0/24
