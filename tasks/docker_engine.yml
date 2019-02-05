@@ -13,8 +13,6 @@
     state: present
   when: ansible_os_family == 'Debian' and docker_pubkey_file is defined and docker_pubkey_file != ''
 
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
 - name: Install yum-utils if necessary.
   yum:
     name: yum-utils
